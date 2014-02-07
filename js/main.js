@@ -55,6 +55,63 @@ var drawMoon = function(){
 		.attr("r", 12)
 		.style("fill", 'grey');
 
-	earth.exit()
+	moon.exit()
 		.remove("circle");
 }()
+
+var width = 240,
+    height = 180,
+    origin = [71, -42],
+    velocity = [.010, -.002],
+    t0 = Date.now();
+
+var sphere = {type: "Sphere"};
+
+var projection = d3.geo.orthographic()
+    .scale(height / 2.1)
+    .translate([width / 2, height / 2])
+    .clipAngle(90)
+    .precision(.5);
+
+var canvas = d3.select("body").append("canvas")
+    .attr("width", width)
+    .attr("height", height);
+
+var context = canvas.node().getContext("2d");
+
+var path = d3.geo.path()
+    .projection(projection)
+    .context(context);
+
+d3.json("http://127.0.0.1:8080/", function(error, topo) {
+  var land = topojson.feature(topo, topo.objects.land);
+
+  d3.timer(function() {
+    var dt = Date.now() - t0;
+    projection.rotate([velocity[0] * dt + origin[0], 0]);
+
+    context.clearRect(0, 0, width, height);
+
+    context.beginPath();
+    path(sphere);
+    context.lineWidth = 1;
+    context.strokeStyle = "blue";
+    context.stroke()
+    context.fillStyle = "blue";
+		context.fill();
+    
+
+    context.beginPath();
+    path(land);
+    context.lineWidth = 1;
+    context.strokeStyle = "green";
+    context.stroke()
+    context.fillStyle = "green";
+		context.fill();
+  });
+});
+
+
+
+
+
