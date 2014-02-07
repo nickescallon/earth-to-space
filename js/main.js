@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 var drawSpace = function(){	
 	var h = window.innerHeight;
 	var w = window.innerWidth;
@@ -19,5 +26,35 @@ var drawSpace = function(){
 
 	stars.exit()
 		.remove("circle");
+}()
 
+
+var drawEarth = function(){
+	var svg = d3.select('svg');
+	var earth = svg.selectAll('.earth').data([1]);
+
+	earth.enter()
+		.append("circle")
+		.attr("cx", 150)
+		.attr("cy", 450)
+		.attr("r", 50)
+		.style("fill", 'blue');
+
+	earth.exit()
+		.remove("circle");
+}()
+
+var drawMoon = function(){
+	var svg = d3.select('svg');
+	var moon = svg.selectAll('.earth').data([1]);
+
+	moon.enter()
+		.append("circle")
+		.attr("cx", 250)
+		.attr("cy", 400)
+		.attr("r", 12)
+		.style("fill", 'grey');
+
+	earth.exit()
+		.remove("circle");
 }()
