@@ -12,6 +12,8 @@ var drawSpace = function(){
 	var count = 0;
 
 	var svg = d3.select('.space').append('svg')
+		.attr('xmlns','http://www.w3.org/2000/svg xmlns:xhtml=http://www.w3.org/1999/xhtml')
+    //.attr('xmlns:xhtml','http://www.w3.org/1999/xhtml')
 		.attr('height', h)
 		.attr('width', w);
 
@@ -25,22 +27,6 @@ var drawSpace = function(){
 	  .style("fill", 'white');
 
 	stars.exit()
-		.remove("circle");
-}()
-
-
-var drawEarth = function(){
-	var svg = d3.select('svg');
-	var earth = svg.selectAll('.earth').data([1]);
-
-	earth.enter()
-		.append("circle")
-		.attr("cx", 150)
-		.attr("cy", 450)
-		.attr("r", 50)
-		.style("fill", 'blue');
-
-	earth.exit()
 		.remove("circle");
 }()
 
@@ -74,6 +60,7 @@ var projection = d3.geo.orthographic()
     .precision(.5);
 
 var canvas = d3.select("body").append("canvas")
+		.attr("class", "globe")
     .attr("width", width)
     .attr("height", height);
 
@@ -110,6 +97,7 @@ d3.json("http://127.0.0.1:8080/", function(error, topo) {
 		context.fill();
   });
 });
+
 
 
 
